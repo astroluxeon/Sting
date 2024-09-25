@@ -1,0 +1,10 @@
+A F 30
+B D 30
+C E 30
+D J 30
+E A 30
+F B 30
+G C 30
+H G 30
+I H 30
+J I 30

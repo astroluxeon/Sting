@@ -1,0 +1,19 @@
+# ninja log v6
+11	403	7489387854105730	CMakeFiles/shuffle.dir/shuffle.cpp.obj.ddi	3f5b06fde231832f
+2341	2509	7489387877405674	shuffle.exe	2d8d6b7c2651d082
+403	446	7489387858033925	CMakeFiles/shuffle.dir/CXX.dd	8cd244c55a4d6ada
+403	446	7489387858033925	C:/Users/ziche/CLionProjects/Sting/cmake-build-debug/CMakeFiles/shuffle.dir/CXXModules.json	8cd244c55a4d6ada
+403	446	7489387858033925	CMakeFiles/shuffle.dir/shuffle.cpp.obj.modmap	8cd244c55a4d6ada
+452	2340	7489387858515096	CMakeFiles/shuffle.dir/shuffle.cpp.obj	41de6f8d0724f421
+448	494	7489499235380472	C:/Users/ziche/CLionProjects/Sting/cmake-build-debug/CMakeFiles/Sting.dir/CXXModules.json	ce7b77b031ecc46a
+9	448	7489499230985219	CMakeFiles/Sting.dir/main.cpp.obj.ddi	d74f6ed0f945b1aa
+448	494	7489499235380472	CMakeFiles/Sting.dir/CXX.dd	ce7b77b031ecc46a
+448	494	7489499235380472	CMakeFiles/Sting.dir/main.cpp.obj.modmap	ce7b77b031ecc46a
+495	2929	7489499235844512	CMakeFiles/Sting.dir/main.cpp.obj	b9ee39708974b02f
+2930	3135	7489499260183537	Sting.exe	2c28834e9addf36f
+14	1119	7489499619425326	CMakeFiles/Sting.dir/main.cpp.obj.ddi	d74f6ed0f945b1aa
+1120	1191	7489499630483213	CMakeFiles/Sting.dir/CXX.dd	ce7b77b031ecc46a
+1120	1191	7489499630483213	C:/Users/ziche/CLionProjects/Sting/cmake-build-debug/CMakeFiles/Sting.dir/CXXModules.json	ce7b77b031ecc46a
+1120	1191	7489499630483213	CMakeFiles/Sting.dir/main.cpp.obj.modmap	ce7b77b031ecc46a
+1193	4182	7489499631219658	CMakeFiles/Sting.dir/main.cpp.obj	b9ee39708974b02f
+4183	4394	7489499661121862	Sting.exe	2c28834e9addf36f
