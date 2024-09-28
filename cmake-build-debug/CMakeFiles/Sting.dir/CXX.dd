@@ -1,3 +1,5 @@
 ninja_dyndep_version = 1.0
 build CMakeFiles/Sting.dir/main.cpp.obj: dyndep
 
+build CMakeFiles/Sting.dir/candidate.cpp.obj: dyndep
+
