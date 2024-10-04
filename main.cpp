@@ -40,7 +40,7 @@ void txt_export(const std::vector<Player>& list, const std::string& filename) {
 }
 
 void search() {
-    std::vector<Player> players = txt_import("..\\sting_list.txt");
+    std::vector<Player> players = txt_import("..\\list.txt");
     std::string fname, lname;
 
     while (true) {
@@ -111,13 +111,13 @@ void initialize() {
         return;
     }
 
-    txt_export(shuffle(players), "..\\sting_list.txt");
+    txt_export(shuffle(players), "..\\list.txt");
 
     std::cout << "\nInitialization Done" << std::endl;
 }
 
 void eliminate() {
-    std::vector<Player> players = txt_import("..\\sting_list.txt");
+    std::vector<Player> players = txt_import("..\\list.txt");
     std::string fname1, lname1;
 
     while (true) {
@@ -162,11 +162,11 @@ void eliminate() {
         std::cout << players[0].fname() << " " << players[0].lname() << " is the winner!" << std::endl;
     }
 
-    txt_export(players, "..\\sting_list.txt");
+    txt_export(players, "..\\list.txt");
 }
 
 void time_decrease() {
-    std::vector<Player> players = txt_import("..\\sting_list.txt");
+    std::vector<Player> players = txt_import("..\\list.txt");
 
     for (auto& c : players) {
         c.set_time(c.time() - 1);
@@ -208,20 +208,20 @@ void time_decrease() {
         std::cout << players[0].fname() << " " << players[0].lname() << " is the winner!" << std::endl;
     }
 
-    txt_export(players, "..\\sting_list.txt");
+    txt_export(players, "..\\list.txt");
 
     std::cout << "Time Decreased by 1 Day" << std::endl;
 }
 
 void shuffle_setup() {
-    std::vector<Player> players = txt_import("..\\sting_list.txt");
+    std::vector<Player> players = txt_import("..\\list.txt");
     std::vector<std::tuple<std::string, std::string>> people;
 
     for (const auto& c : players) {
         people.emplace_back(c.fname(), c.lname());
     }
 
-    txt_export(shuffle(people), "..\\sting_list.txt");
+    txt_export(shuffle(people), "..\\list.txt");
 
     std::cout << "\nShuffle Done" << std::endl;
 }
