@@ -3,7 +3,7 @@
 
 #include <string>
 
-class Candidate {
+class Player {
 private:
     std::string m_fname;
     std::string m_lname;
@@ -12,7 +12,7 @@ private:
     int m_time;
 
 public:
-    Candidate(const std::string& fname, const std::string& lname,
+    Player(const std::string& fname, const std::string& lname,
               const std::string& tfname, const std::string& tlname,
               int time);
 

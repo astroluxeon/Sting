@@ -1,37 +1,37 @@
-#include "candidate.h"
+#include "player.h"
 
-Candidate::Candidate(const std::string& fname, const std::string& lname,
+Player::Player(const std::string& fname, const std::string& lname,
                      const std::string& tfname, const std::string& tlname,
                      int time)
     : m_fname(fname), m_lname(lname),
       m_target_fname(tfname), m_target_lname(tlname),
       m_time(time) {}
 
-std::string Candidate::fname() const {
+std::string Player::fname() const {
     return m_fname;
 }
 
-std::string Candidate::lname() const {
+std::string Player::lname() const {
     return m_lname;
 }
 
-std::string Candidate::tfname() const {
+std::string Player::tfname() const {
     return m_target_fname;
 }
 
-std::string Candidate::tlname() const {
+std::string Player::tlname() const {
     return m_target_lname;
 }
 
-int Candidate::time() const {
+int Player::time() const {
     return m_time;
 }
 
-void Candidate::set_target(std::string tfname, std::string tlname) {
+void Player::set_target(std::string tfname, std::string tlname) {
     m_target_fname = tfname;
     m_target_lname = tlname;
 }
 
-void Candidate::set_time(int time) {
+void Player::set_time(int time) {
     m_time = time;
 }

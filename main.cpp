@@ -8,11 +8,11 @@
 #include <tuple>
 #include <algorithm>
 #include <random>
-#include "candidate.h"
+#include "player.h"
 
-std::vector<Candidate> txt_import(const std::string& filename) {
+std::vector<Player> txt_import(const std::string& filename) {
     std::ifstream file(filename);
-    std::vector<Candidate> list;
+    std::vector<Player> list;
     std::string line;
 
     while (std::getline(file, line)) {
@@ -29,7 +29,7 @@ std::vector<Candidate> txt_import(const std::string& filename) {
     return list;
 }
 
-void txt_export(const std::vector<Candidate>& list, const std::string& filename) {
+void txt_export(const std::vector<Player>& list, const std::string& filename) {
     std::ofstream file(filename);
 
     for (const auto& c : list) {
@@ -40,7 +40,7 @@ void txt_export(const std::vector<Candidate>& list, const std::string& filename)
 }
 
 void search() {
-    std::vector<Candidate> candidates = txt_import("..\\sting_list.txt");
+    std::vector<Player> candidates = txt_import("..\\sting_list.txt");
     std::string fname, lname;
 
     while (true) {
@@ -58,7 +58,7 @@ void search() {
             break;
         }
 
-        auto it = std::ranges::find_if(candidates, [fname, lname](const Candidate& c) {
+        auto it = std::ranges::find_if(candidates, [fname, lname](const Player& c) {
             return c.fname() == fname && c.lname() == lname;
         });
 
@@ -72,12 +72,12 @@ void search() {
     }
 }
 
-std::vector<Candidate> shuffle(std::vector<std::tuple<std::string, std::string>> people) {
+std::vector<Player> shuffle(std::vector<std::tuple<std::string, std::string>> people) {
     std::random_device rd;
     std::mt19937 g(rd());
 
     std::ranges::shuffle(people, g);
-    std::vector<Candidate> sting_list;
+    std::vector<Player> sting_list;
 
     for (size_t i = 0; i < people.size(); ++i) {
         std::string fname = std::get<0>(people[i]);
@@ -117,7 +117,7 @@ void initialize() {
 }
 
 void eliminate() {
-    std::vector<Candidate> candidates = txt_import("..\\sting_list.txt");
+    std::vector<Player> candidates = txt_import("..\\sting_list.txt");
     std::string fname1, lname1;
 
     while (true) {
@@ -135,7 +135,7 @@ void eliminate() {
             break;
         }
 
-        auto it1 = std::ranges::find_if(candidates, [fname1, lname1](const Candidate& c1) {
+        auto it1 = std::ranges::find_if(candidates, [fname1, lname1](const Player& c1) {
             return c1.fname() == fname1 && c1.lname() == lname1;
         });
 
@@ -144,7 +144,7 @@ void eliminate() {
             std::string lname2 = it1->lname();
             std::cout << it1->fname() << " " << it1->lname() << " has been eliminated." << std::endl;
 
-            auto it2 = std::ranges::find_if(candidates, [fname2, lname2](const Candidate& c2) {
+            auto it2 = std::ranges::find_if(candidates, [fname2, lname2](const Player& c2) {
                 return c2.tfname() == fname2 && c2.tlname() == lname2;
             });
 
@@ -166,7 +166,7 @@ void eliminate() {
 }
 
 void time_decrease() {
-    std::vector<Candidate> candidates = txt_import("..\\sting_list.txt");
+    std::vector<Player> candidates = txt_import("..\\sting_list.txt");
 
     for (auto& c : candidates) {
         c.set_time(c.time() - 1);
@@ -180,7 +180,7 @@ void time_decrease() {
 
             std::string fname1 = c.fname(), lname1 = c.lname();
 
-            auto it1 = std::ranges::find_if(candidates, [fname1, lname1](const Candidate& c1) {
+            auto it1 = std::ranges::find_if(candidates, [fname1, lname1](const Player& c1) {
                 return c1.fname() == fname1 && c1.lname() == lname1;
             });
 
@@ -189,7 +189,7 @@ void time_decrease() {
                 std::string lname2 = it1->lname();
                 std::cout << it1->fname() << " " << it1->lname() << " has been eliminated." << std::endl;
 
-                auto it2 = std::ranges::find_if(candidates, [fname2, lname2](const Candidate& c2) {
+                auto it2 = std::ranges::find_if(candidates, [fname2, lname2](const Player& c2) {
                     return c2.tfname() == fname2 && c2.tlname() == lname2;
                 });
 
@@ -214,7 +214,7 @@ void time_decrease() {
 }
 
 void shuffle_setup() {
-    std::vector<Candidate> candidates = txt_import("..\\sting_list.txt");
+    std::vector<Player> candidates = txt_import("..\\sting_list.txt");
     std::vector<std::tuple<std::string, std::string>> people;
 
     for (const auto& c : candidates) {
