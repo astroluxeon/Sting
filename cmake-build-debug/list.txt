@@ -1,0 +1,10 @@
+A A I I 30
+I I J J 30
+J J D D 30
+D D E E 30
+E E G G 30
+G G B B 30
+B B F F 30
+F F C C 30
+C C H H 30
+H H A A 30

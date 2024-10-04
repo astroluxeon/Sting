@@ -54,7 +54,7 @@ void txt_export(const std::vector<Player>& list, const std::string& filename) {
 }
 
 void search() {
-    std::vector<Player> players = txt_import("..\\list.txt");
+    std::vector<Player> players = txt_import("list.txt");
     std::string fname, lname;
 
     while (true) {
@@ -105,7 +105,7 @@ std::vector<Player> shuffle(std::vector<std::tuple<std::string, std::string>> pe
 }
 
 void initialize() {
-    auto file = std::ifstream("..\\initial.txt");
+    auto file = std::ifstream("initial.txt");
     std::vector<std::tuple<std::string, std::string>> players;
     std::string line;
 
@@ -127,14 +127,14 @@ void initialize() {
 
     auto list = shuffle(players);
 
-    txt_export(list, "..\\list.txt");
-    txt_exportf(list, "..\\listf.txt");
+    txt_export(list, "list.txt");
+    txt_exportf(list, "listf.txt");
 
     std::cout << "\nInitialization Done" << std::endl;
 }
 
 void eliminate() {
-    std::vector<Player> players = txt_import("..\\list.txt");
+    std::vector<Player> players = txt_import("list.txt");
     std::string fname1, lname1;
 
     while (true) {
@@ -179,12 +179,12 @@ void eliminate() {
         std::cout << players[0].fname() << " " << players[0].lname() << " is the winner!" << std::endl;
     }
 
-    txt_export(players, "..\\list.txt");
-    txt_exportf(players, "..\\listf.txt");
+    txt_export(players, "list.txt");
+    txt_exportf(players, "listf.txt");
 }
 
 void time_decrease() {
-    std::vector<Player> players = txt_import("..\\list.txt");
+    std::vector<Player> players = txt_import("list.txt");
 
     for (auto& p : players) {
         p.set_time(p.time() - 1);
@@ -226,14 +226,14 @@ void time_decrease() {
         std::cout << players[0].fname() << " " << players[0].lname() << " is the winner!" << std::endl;
     }
 
-    txt_export(players, "..\\list.txt");
-    txt_exportf(players, "..\\listf.txt");
+    txt_export(players, "list.txt");
+    txt_exportf(players, "listf.txt");
 
     std::cout << "Time Decreased by 1 Day" << std::endl;
 }
 
 void shuffle_setup() {
-    std::vector<Player> players = txt_import("..\\list.txt");
+    std::vector<Player> players = txt_import("list.txt");
     std::vector<std::tuple<std::string, std::string>> people;
 
     for (const auto& p : players) {
@@ -242,8 +242,8 @@ void shuffle_setup() {
 
     auto list = shuffle(people);
 
-    txt_export(list, "..\\list.txt");
-    txt_exportf(list, "..\\listf.txt");
+    txt_export(list, "list.txt");
+    txt_exportf(list, "listf.txt");
 
     std::cout << "\nShuffle Done" << std::endl;
 }
