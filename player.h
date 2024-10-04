@@ -1,11 +1,7 @@
-#ifndef CANDIDATE_H
-#define CANDIDATE_H
+#ifndef PLAYER_H
+#define PLAYER_H
 
 #include <string>
-
-inline const std::string txt_file = "list.txt";
-inline const std::string txt_filef = "listf.txt";
-inline const int time_limit = 28;
 
 class Player {
 private:
