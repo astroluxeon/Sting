@@ -40,7 +40,7 @@ void txt_export(const std::vector<Player>& list, const std::string& filename) {
 }
 
 void search() {
-    std::vector<Player> candidates = txt_import("..\\sting_list.txt");
+    std::vector<Player> players = txt_import("..\\sting_list.txt");
     std::string fname, lname;
 
     while (true) {
@@ -58,11 +58,11 @@ void search() {
             break;
         }
 
-        auto it = std::ranges::find_if(candidates, [fname, lname](const Player& c) {
+        auto it = std::ranges::find_if(players, [fname, lname](const Player& c) {
             return c.fname() == fname && c.lname() == lname;
         });
 
-        if (it != candidates.end()) {
+        if (it != players.end()) {
             std::cout << "Name: " << it->fname() << " " << it->lname() << std::endl;
             std::cout << "Target: " << it->tfname() << " " << it->tlname() << std::endl;
             std::cout << "Time Left: " << it->time() << " Days" << std::endl;
@@ -77,22 +77,22 @@ std::vector<Player> shuffle(std::vector<std::tuple<std::string, std::string>> pe
     std::mt19937 g(rd());
 
     std::ranges::shuffle(people, g);
-    std::vector<Player> sting_list;
+    std::vector<Player> players;
 
     for (size_t i = 0; i < people.size(); ++i) {
         std::string fname = std::get<0>(people[i]);
         std::string lname = std::get<1>(people[i]);
         std::string tfname = std::get<0>(people[(i + 1) % people.size()]);
         std::string tlname = std::get<1>(people[(i + 1) % people.size()]);
-        sting_list.emplace_back(fname, lname, tfname, tlname, 30);
+        players.emplace_back(fname, lname, tfname, tlname, 30);
     }
 
-    return sting_list;
+    return players;
 }
 
 void initialize() {
     auto file = std::ifstream("..\\initial.txt");
-    std::vector<std::tuple<std::string, std::string>> people;
+    std::vector<std::tuple<std::string, std::string>> players;
     std::string line;
 
     while (std::getline(file, line)) {
@@ -100,24 +100,24 @@ void initialize() {
         std::string fname, lname;
 
         if (iss >> fname >> lname) {
-            people.emplace_back(fname, lname);
+            players.emplace_back(fname, lname);
         }
     }
 
     file.close();
 
-    if (people.empty()) {
+    if (players.empty()) {
         std::cout << "\nNo names found." << std::endl;
         return;
     }
 
-    txt_export(shuffle(people), "..\\sting_list.txt");
+    txt_export(shuffle(players), "..\\sting_list.txt");
 
     std::cout << "\nInitialization Done" << std::endl;
 }
 
 void eliminate() {
-    std::vector<Player> candidates = txt_import("..\\sting_list.txt");
+    std::vector<Player> players = txt_import("..\\sting_list.txt");
     std::string fname1, lname1;
 
     while (true) {
@@ -135,16 +135,16 @@ void eliminate() {
             break;
         }
 
-        auto it1 = std::ranges::find_if(candidates, [fname1, lname1](const Player& c1) {
+        auto it1 = std::ranges::find_if(players, [fname1, lname1](const Player& c1) {
             return c1.fname() == fname1 && c1.lname() == lname1;
         });
 
-        if (it1 != candidates.end()) {
+        if (it1 != players.end()) {
             std::string fname2 = it1->fname();
             std::string lname2 = it1->lname();
             std::cout << it1->fname() << " " << it1->lname() << " has been eliminated." << std::endl;
 
-            auto it2 = std::ranges::find_if(candidates, [fname2, lname2](const Player& c2) {
+            auto it2 = std::ranges::find_if(players, [fname2, lname2](const Player& c2) {
                 return c2.tfname() == fname2 && c2.tlname() == lname2;
             });
 
@@ -152,44 +152,44 @@ void eliminate() {
             it2->set_time(30);
             std::cout << it2->fname() << " " << it2->lname() << "'s new target is: " << it2->tfname() << " " << it2->tlname() << std::endl;
 
-            candidates.erase(it1);
+            players.erase(it1);
         } else {
             std::cout << "Candidate not found." << std::endl;
         }
     }
 
-    if (candidates.size() == 1) {
-        std::cout << candidates[0].fname() << " " << candidates[0].lname() << " is the winner!" << std::endl;
+    if (players.size() == 1) {
+        std::cout << players[0].fname() << " " << players[0].lname() << " is the winner!" << std::endl;
     }
 
-    txt_export(candidates, "..\\sting_list.txt");
+    txt_export(players, "..\\sting_list.txt");
 }
 
 void time_decrease() {
-    std::vector<Player> candidates = txt_import("..\\sting_list.txt");
+    std::vector<Player> players = txt_import("..\\sting_list.txt");
 
-    for (auto& c : candidates) {
+    for (auto& c : players) {
         c.set_time(c.time() - 1);
     }
 
     std::cout << std::endl;
 
-    for (const auto& c : candidates) {
+    for (const auto& c : players) {
         if (c.time() <= 0) {
             std::cout << c.fname() << " " << c.lname() << " has run out of time." << std::endl;
 
             std::string fname1 = c.fname(), lname1 = c.lname();
 
-            auto it1 = std::ranges::find_if(candidates, [fname1, lname1](const Player& c1) {
+            auto it1 = std::ranges::find_if(players, [fname1, lname1](const Player& c1) {
                 return c1.fname() == fname1 && c1.lname() == lname1;
             });
 
-            if (it1 != candidates.end()) {
+            if (it1 != players.end()) {
                 std::string fname2 = it1->fname();
                 std::string lname2 = it1->lname();
                 std::cout << it1->fname() << " " << it1->lname() << " has been eliminated." << std::endl;
 
-                auto it2 = std::ranges::find_if(candidates, [fname2, lname2](const Player& c2) {
+                auto it2 = std::ranges::find_if(players, [fname2, lname2](const Player& c2) {
                     return c2.tfname() == fname2 && c2.tlname() == lname2;
                 });
 
@@ -197,27 +197,27 @@ void time_decrease() {
                 it2->set_time(30);
                 std::cout << it2->fname() << " " << it2->lname() << "'s new target is: " << it2->tfname() << " " << it2->tlname() << std::endl;
 
-                candidates.erase(it1);
+                players.erase(it1);
             } else {
                 std::cout << "Candidate not found." << std::endl;
             }
         }
     }
 
-    if (candidates.size() == 1) {
-        std::cout << candidates[0].fname() << " " << candidates[0].lname() << " is the winner!" << std::endl;
+    if (players.size() == 1) {
+        std::cout << players[0].fname() << " " << players[0].lname() << " is the winner!" << std::endl;
     }
 
-    txt_export(candidates, "..\\sting_list.txt");
+    txt_export(players, "..\\sting_list.txt");
 
     std::cout << "Time Decreased by 1 Day" << std::endl;
 }
 
 void shuffle_setup() {
-    std::vector<Player> candidates = txt_import("..\\sting_list.txt");
+    std::vector<Player> players = txt_import("..\\sting_list.txt");
     std::vector<std::tuple<std::string, std::string>> people;
 
-    for (const auto& c : candidates) {
+    for (const auto& c : players) {
         people.emplace_back(c.fname(), c.lname());
     }
 
@@ -230,7 +230,7 @@ int main() {
     std::string input;
 
     while (true) {
-        std::cout << "\nEnter 0 for candidate search, 1 for time decrease, 2 for candidate elimination,\n5 for target shuffle, 10 for candidate initialization, or anything else to quit:" << std::endl;
+        std::cout << "\nEnter 0 for player search, 1 for time decrease, 2 for player elimination,\n5 for target shuffle, 10 for player initialization, or anything else to quit:" << std::endl;
         std::getline(std::cin, input);
 
         if (input.empty()) {

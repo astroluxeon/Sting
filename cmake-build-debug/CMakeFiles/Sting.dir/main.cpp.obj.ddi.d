@@ -213,4 +213,4 @@ CMakeFiles\Sting.dir\main.cpp.obj.ddi: \
  C:/msys64/ucrt64/include/c++/14.1.0/numeric \
  C:/msys64/ucrt64/include/c++/14.1.0/bits/stl_numeric.h \
  C:/msys64/ucrt64/include/c++/14.1.0/pstl/glue_numeric_defs.h \
- C:/Users/ziche/CLionProjects/Sting/candidate.h
+ C:/Users/ziche/CLionProjects/Sting/player.h
