@@ -100722,6 +100722,10 @@ namespace __detail
 
 
 # 6 "C:/Users/ziche/CLionProjects/Sting/player.h"
+inline const std::string txt_file = "list.txt";
+inline const std::string txt_filef = "listf.txt";
+inline const int time_limit = 28;
+
 class Player {
 private:
     std::string m_fname;
@@ -100746,8 +100750,8 @@ public:
 };
 # 12 "C:/Users/ziche/CLionProjects/Sting/main.cpp" 2
 
-std::vector<Player> txt_import(const std::string& filename) {
-    std::ifstream file(filename);
+std::vector<Player> txt_import() {
+    std::ifstream file(txt_file);
     std::vector<Player> list;
     std::string line;
 
@@ -100765,22 +100769,8 @@ std::vector<Player> txt_import(const std::string& filename) {
     return list;
 }
 
-void txt_exportf(std::vector<Player>& list, const std::string& filename) {
-    std::ranges::sort(list, [](const Player& p1, const Player& p2) {
-        return p1.fname() < p2.fname();
-    });
-
-    std::ofstream file(filename);
-
-    for (const auto& p : list) {
-        file << p.fname() << " " << p.lname() << "'s target is " << p.tfname() << " " << p.tlname() << " (Time Remaining: " << p.time() << " Days)" << std::endl;
-    }
-
-    file.close();
-}
-
-void txt_export(const std::vector<Player>& list, const std::string& filename) {
-    std::ofstream file(filename);
+void txt_export(const std::vector<Player>& list) {
+    std::ofstream file(txt_file);
 
     for (const auto& p : list) {
         file << p.fname() << " " << p.lname() << " " << p.tfname() << " " << p.tlname() << " " << p.time() << std::endl;
@@ -100789,8 +100779,22 @@ void txt_export(const std::vector<Player>& list, const std::string& filename) {
     file.close();
 }
 
+void txt_exportf(std::vector<Player>& list) {
+    std::ranges::sort(list, [](const Player& p1, const Player& p2) {
+        return p1.fname() < p2.fname();
+    });
+
+    std::ofstream file(txt_filef);
+
+    for (const auto& p : list) {
+        file << p.fname() << " " << p.lname() << "'s target is " << p.tfname() << " " << p.tlname() << " (Time Remaining: " << p.time() << " Days)" << std::endl;
+    }
+
+    file.close();
+}
+
 void search() {
-    std::vector<Player> players = txt_import("list.txt");
+    std::vector<Player> players = txt_import();
     std::string fname, lname;
 
     while (true) {
@@ -100834,7 +100838,7 @@ std::vector<Player> shuffle(std::vector<std::tuple<std::string, std::string>> pe
         std::string lname = std::get<1>(people[i]);
         std::string tfname = std::get<0>(people[(i + 1) % people.size()]);
         std::string tlname = std::get<1>(people[(i + 1) % people.size()]);
-        players.emplace_back(fname, lname, tfname, tlname, 30);
+        players.emplace_back(fname, lname, tfname, tlname, time_limit);
     }
 
     return players;
@@ -100863,14 +100867,14 @@ void initialize() {
 
     auto list = shuffle(players);
 
-    txt_export(list, "list.txt");
-    txt_exportf(list, "listf.txt");
+    txt_export(list);
+    txt_exportf(list);
 
     std::cout << "\nInitialization Done" << std::endl;
 }
 
 void eliminate() {
-    std::vector<Player> players = txt_import("list.txt");
+    std::vector<Player> players = txt_import();
     std::string fname1, lname1;
 
     while (true) {
@@ -100902,7 +100906,7 @@ void eliminate() {
             });
 
             it2->set_target(it1->tfname(), it1->tlname());
-            it2->set_time(30);
+            it2->set_time(time_limit);
             std::cout << it2->fname() << " " << it2->lname() << "'s new target is: " << it2->tfname() << " " << it2->tlname() << std::endl;
 
             players.erase(it1);
@@ -100915,12 +100919,12 @@ void eliminate() {
         std::cout << players[0].fname() << " " << players[0].lname() << " is the winner!" << std::endl;
     }
 
-    txt_export(players, "list.txt");
-    txt_exportf(players, "listf.txt");
+    txt_export(players);
+    txt_exportf(players);
 }
 
 void time_decrease() {
-    std::vector<Player> players = txt_import("list.txt");
+    std::vector<Player> players = txt_import();
 
     for (auto& p : players) {
         p.set_time(p.time() - 1);
@@ -100948,7 +100952,7 @@ void time_decrease() {
                 });
 
                 it2->set_target(it1->tfname(), it1->tlname());
-                it2->set_time(30);
+                it2->set_time(time_limit);
                 std::cout << it2->fname() << " " << it2->lname() << "'s new target is: " << it2->tfname() << " " << it2->tlname() << std::endl;
 
                 players.erase(it1);
@@ -100962,14 +100966,14 @@ void time_decrease() {
         std::cout << players[0].fname() << " " << players[0].lname() << " is the winner!" << std::endl;
     }
 
-    txt_export(players, "list.txt");
-    txt_exportf(players, "listf.txt");
+    txt_export(players);
+    txt_exportf(players);
 
     std::cout << "Time Decreased by 1 Day" << std::endl;
 }
 
 void shuffle_setup() {
-    std::vector<Player> players = txt_import("list.txt");
+    std::vector<Player> players = txt_import();
     std::vector<std::tuple<std::string, std::string>> people;
 
     for (const auto& p : players) {
@@ -100978,8 +100982,8 @@ void shuffle_setup() {
 
     auto list = shuffle(people);
 
-    txt_export(list, "list.txt");
-    txt_exportf(list, "listf.txt");
+    txt_export(list);
+    txt_exportf(list);
 
     std::cout << "\nShuffle Done" << std::endl;
 }

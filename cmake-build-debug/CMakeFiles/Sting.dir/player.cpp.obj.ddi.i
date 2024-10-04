@@ -33664,6 +33664,10 @@ namespace std
 
 
 # 6 "C:/Users/ziche/CLionProjects/Sting/player.h"
+inline const std::string txt_file = "list.txt";
+inline const std::string txt_filef = "listf.txt";
+inline const int time_limit = 28;
+
 class Player {
 private:
     std::string m_fname;
