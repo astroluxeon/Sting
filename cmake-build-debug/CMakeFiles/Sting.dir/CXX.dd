@@ -3,3 +3,5 @@ build CMakeFiles/Sting.dir/main.cpp.obj: dyndep
 
 build CMakeFiles/Sting.dir/player.cpp.obj: dyndep
 
+build CMakeFiles/Sting.dir/game.cpp.obj: dyndep
+

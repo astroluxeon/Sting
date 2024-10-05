@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <tuple>
+#include "player.h"
 
 inline const std::string txt_file = "list.txt";
 inline const std::string txt_filef = "listf.txt";
@@ -16,8 +17,9 @@ void txt_exportf(std::vector<Player>& list);
 
 void search();
 std::vector<Player> shuffle(std::vector<std::tuple<std::string, std::string>> people);
-void initialize();
+void shuffle_setup();
 void eliminate();
 void time_decrease();
+void initialize();
 
 #endif

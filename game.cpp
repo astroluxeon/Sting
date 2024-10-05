@@ -103,33 +103,20 @@ std::vector<Player> shuffle(std::vector<std::tuple<std::string, std::string>> pe
     return players;
 }
 
-void initialize() {
-    auto file = std::ifstream(txt_initial);
-    std::vector<std::tuple<std::string, std::string>> players;
-    std::string line;
+void shuffle_setup() {
+    std::vector<Player> players = txt_import();
+    std::vector<std::tuple<std::string, std::string>> people;
 
-    while (std::getline(file, line)) {
-        std::istringstream iss(line);
-        std::string fname, lname;
-
-        if (iss >> fname >> lname) {
-            players.emplace_back(fname, lname);
-        }
+    for (const auto& p : players) {
+        people.emplace_back(p.fname(), p.lname());
     }
 
-    file.close();
-
-    if (players.empty()) {
-        std::cout << "\nNo names found." << std::endl;
-        return;
-    }
-
-    auto list = shuffle(players);
+    auto list = shuffle(people);
 
     txt_export(list);
     txt_exportf(list);
 
-    std::cout << "\nInitialization Done" << std::endl;
+    std::cout << "\nShuffle Done" << std::endl;
 }
 
 void eliminate() {
@@ -191,33 +178,30 @@ void time_decrease() {
 
     std::cout << std::endl;
 
-    for (const auto& p : players) {
-        if (p.time() <= 0) {
-            std::cout << p.fname() << " " << p.lname() << " has run out of time." << std::endl;
+    for (auto it = players.begin(); it != players.end(); ++it) {
+        if (it->time() <= 0) {
+            std::cout << it->fname() << " " << it->lname() << " has run out of time." << std::endl;
 
-            std::string fname1 = p.fname(), lname1 = p.lname();
+            std::string fname1 = it->fname(), lname1 = it->lname();
 
             auto it1 = std::ranges::find_if(players, [fname1, lname1](const Player& p1) {
                 return p1.fname() == fname1 && p1.lname() == lname1;
             });
 
-            if (it1 != players.end()) {
-                std::string fname2 = it1->fname();
-                std::string lname2 = it1->lname();
-                std::cout << it1->fname() << " " << it1->lname() << " has been eliminated." << std::endl;
+            std::string fname2 = it1->fname();
+            std::string lname2 = it1->lname();
+            std::cout << it1->fname() << " " << it1->lname() << " has been eliminated." << std::endl;
 
-                auto it2 = std::ranges::find_if(players, [fname2, lname2](const Player& p2) {
-                    return p2.tfname() == fname2 && p2.tlname() == lname2;
-                });
+            auto it2 = std::ranges::find_if(players, [fname2, lname2](const Player& p2) {
+                return p2.tfname() == fname2 && p2.tlname() == lname2;
+            });
 
-                it2->set_target(it1->tfname(), it1->tlname());
-                it2->set_time(time_limit);
-                std::cout << it2->fname() << " " << it2->lname() << "'s new target is: " << it2->tfname() << " " << it2->tlname() << std::endl;
+            it2->set_target(it1->tfname(), it1->tlname());
+            it2->set_time(time_limit);
+            std::cout << it2->fname() << " " << it2->lname() << "'s new target is: " << it2->tfname() << " " << it2->tlname() << std::endl;
 
-                players.erase(it1);
-            } else {
-                std::cout << "Candidate not found." << std::endl;
-            }
+            players.erase(it1);
+            --it;
         }
     }
 
@@ -229,4 +213,33 @@ void time_decrease() {
     txt_exportf(players);
 
     std::cout << "Time Decreased by 1 Day" << std::endl;
+}
+
+void initialize() {
+    auto file = std::ifstream(txt_initial);
+    std::vector<std::tuple<std::string, std::string>> players;
+    std::string line;
+
+    while (std::getline(file, line)) {
+        std::istringstream iss(line);
+        std::string fname, lname;
+
+        if (iss >> fname >> lname) {
+            players.emplace_back(fname, lname);
+        }
+    }
+
+    file.close();
+
+    if (players.empty()) {
+        std::cout << "\nNo names found." << std::endl;
+        return;
+    }
+
+    auto list = shuffle(players);
+
+    txt_export(list);
+    txt_exportf(list);
+
+    std::cout << "\nInitialization Done" << std::endl;
 }
