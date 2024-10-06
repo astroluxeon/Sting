@@ -100712,6 +100712,11 @@ namespace __detail
 }
 # 51 "C:/msys64/ucrt64/include/c++/14.1.0/random" 2 3
 # 9 "C:/Users/ziche/CLionProjects/Sting/game.cpp" 2
+# 1 "C:/msys64/ucrt64/include/c++/14.1.0/cctype" 1 3
+# 39 "C:/msys64/ucrt64/include/c++/14.1.0/cctype" 3
+       
+# 40 "C:/msys64/ucrt64/include/c++/14.1.0/cctype" 3
+# 10 "C:/Users/ziche/CLionProjects/Sting/game.cpp" 2
 # 1 "C:/Users/ziche/CLionProjects/Sting/player.h" 1
 
 
@@ -100742,7 +100747,7 @@ public:
     void set_target(std::string tfname, std::string tlname);
     void set_time(int time);
 };
-# 10 "C:/Users/ziche/CLionProjects/Sting/game.cpp" 2
+# 11 "C:/Users/ziche/CLionProjects/Sting/game.cpp" 2
 # 1 "C:/Users/ziche/CLionProjects/Sting/game.h" 1
 # 9 "C:/Users/ziche/CLionProjects/Sting/game.h"
 inline const std::string txt_file = "list.txt";
@@ -100760,32 +100765,45 @@ void shuffle_setup();
 void eliminate();
 void time_decrease();
 void initialize();
-# 11 "C:/Users/ziche/CLionProjects/Sting/game.cpp" 2
+# 12 "C:/Users/ziche/CLionProjects/Sting/game.cpp" 2
+
+std::string first_upper(std::string s) {
+    if (!s.empty()) {
+        s[0] = std::toupper(s[0]);
+    }
+    return s;
+}
 
 std::vector<Player> txt_import() {
     std::ifstream file(txt_file);
-    std::vector<Player> list;
+    std::vector<Player> players;
+    std::vector<std::tuple<std::string, std::string, int>> list;
     std::string line;
 
     while (std::getline(file, line)) {
         std::istringstream iss(line);
-        std::string fname, lname, tfname, tlname;
+        std::string fname, lname;
         int time;
 
-        if (iss >> fname >> lname >> tfname >> tlname >> time) {
-            list.emplace_back(fname, lname, tfname, tlname, time);
+        if (iss >> fname >> lname >> time) {
+            list.emplace_back(fname, lname, time);
         }
     }
 
     file.close();
-    return list;
+
+    for (size_t i = 0; i < list.size(); ++i) {
+        players.emplace_back(std::get<0>(list[i]), std::get<1>(list[i]), std::get<0>(list[(i + 1) % list.size()]), std::get<1>(list[(i + 1) % list.size()]), std::get<2>(list[i]));
+    }
+
+    return players;
 }
 
 void txt_export(const std::vector<Player>& list) {
     std::ofstream file(txt_file);
 
     for (const auto& p : list) {
-        file << p.fname() << " " << p.lname() << " " << p.tfname() << " " << p.tlname() << " " << p.time() << std::endl;
+        file << p.fname() << " " << p.lname() << " " << p.time() << std::endl;
     }
 
     file.close();
@@ -100799,7 +100817,7 @@ void txt_exportf(std::vector<Player>& list) {
     std::ofstream file(txt_filef);
 
     for (const auto& p : list) {
-        file << p.fname() << " " << p.lname() << "'s target is " << p.tfname() << " " << p.tlname() << " (Time Remaining: " << p.time() << " Days)" << std::endl;
+        file << first_upper(p.fname()) << " " << first_upper(p.lname()) << "'s target is " << first_upper(p.tfname()) << " " << first_upper(p.tlname()) << " (Time Remaining: " << p.time() << " Days)" << std::endl;
     }
 
     file.close();
