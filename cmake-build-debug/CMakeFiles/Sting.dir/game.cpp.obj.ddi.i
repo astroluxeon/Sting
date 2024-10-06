@@ -100840,7 +100840,7 @@ void search() {
     std::vector<Player> players = txt_import();
     std::string fname, lname;
 
-    while (true) {
+    for (;;) {
         std::cout << "\nEnter Candidate's First Name:" << std::endl;
         std::getline(std::cin, fname);
 
@@ -100911,7 +100911,7 @@ void eliminate() {
     std::vector<Player> players = txt_import();
     std::string fname1, lname1;
 
-    while (true) {
+    for (;;) {
         std::cout << "\nEnter Candidate's First Name:" << std::endl;
         std::getline(std::cin, fname1);
 
