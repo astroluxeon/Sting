@@ -3,8 +3,6 @@
 # 0 "<built-in>"
 # 0 "<command-line>"
 # 1 "C:/Users/ziche/CLionProjects/Sting/main.cpp"
-
-
 # 1 "C:/msys64/ucrt64/include/c++/14.1.0/iostream" 1 3
 # 36 "C:/msys64/ucrt64/include/c++/14.1.0/iostream" 3
        
@@ -68080,7 +68078,7 @@ namespace std
 # 85 "C:/msys64/ucrt64/include/c++/14.1.0/iostream" 3
 
 }
-# 4 "C:/Users/ziche/CLionProjects/Sting/main.cpp" 2
+# 2 "C:/Users/ziche/CLionProjects/Sting/main.cpp" 2
 
 # 1 "C:/Users/ziche/CLionProjects/Sting/game.h" 1
 
@@ -73057,7 +73055,7 @@ void shuffle_setup();
 void eliminate();
 void time_decrease();
 void initialize();
-# 6 "C:/Users/ziche/CLionProjects/Sting/main.cpp" 2
+# 4 "C:/Users/ziche/CLionProjects/Sting/main.cpp" 2
 
 int main() {
     std::string input;

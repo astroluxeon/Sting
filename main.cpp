@@ -1,5 +1,3 @@
-// PMSS Sting Algorithm by Zi Chen Cai
-
 #include <iostream>
 #include <string>
 #include "game.h"
