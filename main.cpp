@@ -1,7 +1,6 @@
 // PMSS Sting Algorithm by Zi Chen Cai
 
 #include <iostream>
-#include <fstream>
 #include <string>
 #include "game.h"
 
@@ -12,7 +11,7 @@ int main() {
         std::cout << "\nEnter 0 for player search, 1 for time decrease, 2 for player elimination, 3 for formatted list update,\n10 for target shuffle, 50 for player initialization, or anything else to quit:" << std::endl;
         std::getline(std::cin, input);
 
-        if (input.empty()) {
+        if (input.empty() || !std::all_of(input.begin(), input.end(), ::isdigit)) {
             break;
         }
 
