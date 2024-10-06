@@ -20,23 +20,23 @@ std::string first_upper(std::string s) {
 std::vector<Player> txt_import() {
     std::ifstream file(txt_file);
     std::vector<Player> players;
-    std::vector<std::tuple<std::string, std::string, int>> list;
+    std::vector<std::tuple<std::string, std::string, std::string, int>> list;
     std::string line;
 
     while (std::getline(file, line)) {
         std::istringstream iss(line);
-        std::string fname, lname;
+        std::string fname, lname, instagram;
         int time;
 
-        if (iss >> fname >> lname >> time) {
-            list.emplace_back(fname, lname, time);
+        if (iss >> fname >> lname >> instagram >> time) {
+            list.emplace_back(fname, lname, instagram, time);
         }
     }
 
     file.close();
 
     for (size_t i = 0; i < list.size(); ++i) {
-        players.emplace_back(std::get<0>(list[i]), std::get<1>(list[i]), std::get<0>(list[(i + 1) % list.size()]), std::get<1>(list[(i + 1) % list.size()]), std::get<2>(list[i]));
+        players.emplace_back(std::get<0>(list[i]), std::get<1>(list[i]), std::get<0>(list[(i + 1) % list.size()]), std::get<1>(list[(i + 1) % list.size()]), std::get<2>(list[i]), std::get<3>(list[i]));
     }
 
     return players;
@@ -46,7 +46,7 @@ void txt_export(const std::vector<Player>& list) {
     std::ofstream file(txt_file);
 
     for (const auto& p : list) {
-        file << p.fname() << " " << p.lname() << " " << p.time() << std::endl;
+        file << p.fname() << " " << p.lname() << " " << p.instagram() << " " << p.time() << std::endl;
     }
 
     file.close();
@@ -60,7 +60,7 @@ void txt_exportf(std::vector<Player>& list) {
     std::ofstream file(txt_filef);
 
     for (const auto& p : list) {
-        file << first_upper(p.fname()) << " " << first_upper(p.lname()) << "'s target is " << first_upper(p.tfname()) << " " << first_upper(p.tlname()) << " (Time Remaining: " << p.time() << " Days)" << std::endl;
+        file << first_upper(p.fname()) << " " << first_upper(p.lname()) << "'s target is " << first_upper(p.tfname()) << " " << first_upper(p.tlname()) << " (Instagram: " << p.instagram() << ", Time Remaining: " << p.time() << " Days)" << std::endl;
     }
 
     file.close();
@@ -90,8 +90,9 @@ void search() {
         });
 
         if (it != players.end()) {
-            std::cout << "Name: " << it->fname() << " " << it->lname() << std::endl;
-            std::cout << "Target: " << it->tfname() << " " << it->tlname() << std::endl;
+            std::cout << "Name: " << first_upper(it->fname()) << " " << first_upper(it->lname()) << std::endl;
+            std::cout << "Instagram: " << it->instagram() << std::endl;
+            std::cout << "Target: " << first_upper(it->tfname()) << " " << first_upper(it->tlname()) << std::endl;
             std::cout << "Time Left: " << it->time() << " Days" << std::endl;
         } else {
             std::cout << "Candidate Not Found" << std::endl;
@@ -99,7 +100,7 @@ void search() {
     }
 }
 
-std::vector<Player> shuffle(std::vector<std::tuple<std::string, std::string>> people) {
+std::vector<Player> shuffle(std::vector<std::tuple<std::string, std::string, std::string>> people) {
     std::random_device rd;
     std::mt19937 g(rd());
 
@@ -111,7 +112,8 @@ std::vector<Player> shuffle(std::vector<std::tuple<std::string, std::string>> pe
         std::string lname = std::get<1>(people[i]);
         std::string tfname = std::get<0>(people[(i + 1) % people.size()]);
         std::string tlname = std::get<1>(people[(i + 1) % people.size()]);
-        players.emplace_back(fname, lname, tfname, tlname, time_limit);
+        std::string instagram = std::get<2>(people[i]);
+        players.emplace_back(fname, lname, tfname, tlname, instagram, time_limit);
     }
 
     return players;
@@ -119,13 +121,13 @@ std::vector<Player> shuffle(std::vector<std::tuple<std::string, std::string>> pe
 
 void shuffle_setup() {
     std::vector<Player> players = txt_import();
-    std::vector<std::tuple<std::string, std::string>> people;
+    std::vector<std::tuple<std::string, std::string, std::string>> people;
 
     for (const auto& p : players) {
-        people.emplace_back(p.fname(), p.lname());
+        people.emplace_back(p.fname(), p.lname(), p.instagram());
     }
 
-    auto list = shuffle(people);
+    std::vector<Player> list = shuffle(people);
 
     txt_export(list);
     txt_exportf(list);
@@ -159,7 +161,7 @@ void eliminate() {
         if (it1 != players.end()) {
             std::string fname2 = it1->fname();
             std::string lname2 = it1->lname();
-            std::cout << it1->fname() << " " << it1->lname() << " has been eliminated." << std::endl;
+            std::cout << first_upper(it1->fname()) << " " << first_upper(it1->lname()) << " has been eliminated." << std::endl;
 
             auto it2 = std::ranges::find_if(players, [fname2, lname2](const Player& p2) {
                 return p2.tfname() == fname2 && p2.tlname() == lname2;
@@ -167,7 +169,7 @@ void eliminate() {
 
             it2->set_target(it1->tfname(), it1->tlname());
             it2->set_time(time_limit);
-            std::cout << it2->fname() << " " << it2->lname() << "'s new target is: " << it2->tfname() << " " << it2->tlname() << std::endl;
+            std::cout << first_upper(it2->fname()) << " " << first_upper(it2->lname()) << "'s new target is: " << first_upper(it2->tfname()) << " " << first_upper(it2->tlname()) << std::endl;
 
             players.erase(it1);
         } else {
@@ -176,7 +178,7 @@ void eliminate() {
     }
 
     if (players.size() == 1) {
-        std::cout << players[0].fname() << " " << players[0].lname() << " is the winner!" << std::endl;
+        std::cout << first_upper(players[0].fname()) << " " << first_upper(players[0].lname()) << " is the winner!" << std::endl;
     }
 
     txt_export(players);
@@ -194,7 +196,7 @@ void time_decrease() {
 
     for (auto it = players.begin(); it != players.end(); ++it) {
         if (it->time() <= 0) {
-            std::cout << it->fname() << " " << it->lname() << " has run out of time." << std::endl;
+            std::cout << first_upper(it->fname()) << " " << first_upper(it->lname()) << " has run out of time." << std::endl;
 
             std::string fname1 = it->fname(), lname1 = it->lname();
 
@@ -204,7 +206,7 @@ void time_decrease() {
 
             std::string fname2 = it1->fname();
             std::string lname2 = it1->lname();
-            std::cout << it1->fname() << " " << it1->lname() << " has been eliminated." << std::endl;
+            std::cout << first_upper(it1->fname()) << " " << first_upper(it1->lname()) << " has been eliminated." << std::endl;
 
             auto it2 = std::ranges::find_if(players, [fname2, lname2](const Player& p2) {
                 return p2.tfname() == fname2 && p2.tlname() == lname2;
@@ -212,7 +214,7 @@ void time_decrease() {
 
             it2->set_target(it1->tfname(), it1->tlname());
             it2->set_time(time_limit);
-            std::cout << it2->fname() << " " << it2->lname() << "'s new target is: " << it2->tfname() << " " << it2->tlname() << std::endl;
+            std::cout << first_upper(it2->fname()) << " " << first_upper(it2->lname()) << "'s new target is: " << first_upper(it2->tfname()) << " " << first_upper(it2->tlname()) << std::endl;
 
             players.erase(it1);
             --it;
@@ -220,7 +222,7 @@ void time_decrease() {
     }
 
     if (players.size() == 1) {
-        std::cout << players[0].fname() << " " << players[0].lname() << " is the winner!" << std::endl;
+        std::cout << first_upper(players[0].fname()) << " " << first_upper(players[0].lname()) << " is the winner!" << std::endl;
     }
 
     txt_export(players);
@@ -231,15 +233,15 @@ void time_decrease() {
 
 void initialize() {
     auto file = std::ifstream(txt_initial);
-    std::vector<std::tuple<std::string, std::string>> players;
+    std::vector<std::tuple<std::string, std::string, std::string>> players;
     std::string line;
 
     while (std::getline(file, line)) {
         std::istringstream iss(line);
-        std::string fname, lname;
+        std::string fname, lname, instagram;
 
-        if (iss >> fname >> lname) {
-            players.emplace_back(fname, lname);
+        if (iss >> fname >> lname >> instagram) {
+            players.emplace_back(fname, lname, instagram);
         }
     }
 
@@ -250,7 +252,7 @@ void initialize() {
         return;
     }
 
-    auto list = shuffle(players);
+    std::vector<Player> list = shuffle(players);
 
     txt_export(list);
     txt_exportf(list);
