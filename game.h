@@ -15,8 +15,9 @@ std::vector<Player> txt_import();
 void txt_export(const std::vector<Player>& list);
 void txt_exportf(std::vector<Player>& list);
 
+void update_listf();
 void search();
-std::vector<Player> shuffle(std::vector<std::tuple<std::string, std::string>> people);
+std::vector<Player> shuffle(std::vector<std::tuple<std::string, std::string, std::string>> list);
 void shuffle_setup();
 void eliminate();
 void time_decrease();

@@ -9,7 +9,7 @@ int main() {
     std::string input;
 
     for (;;) {
-        std::cout << "\nEnter 0 for player search, 1 for time decrease, 2 for player elimination,\n5 for target shuffle, 10 for player initialization, or anything else to quit:" << std::endl;
+        std::cout << "\nEnter 0 for player search, 1 for time decrease, 2 for player elimination, 3 for formatted list update,\n10 for target shuffle, 50 for player initialization, or anything else to quit:" << std::endl;
         std::getline(std::cin, input);
 
         if (input.empty()) {
@@ -28,10 +28,13 @@ int main() {
             case 2:
                 eliminate();
                 break;
-            case 5:
-                shuffle_setup();
+            case 3:
+                update_listf();
                 break;
             case 10:
+                shuffle_setup();
+                break;
+            case 50:
                 initialize();
                 break;
             default:

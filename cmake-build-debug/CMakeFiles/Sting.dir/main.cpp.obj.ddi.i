@@ -75050,21 +75050,24 @@ private:
     std::string m_target_fname;
     std::string m_target_lname;
     std::string m_instagram;
+    std::string m_target_instagram;
     int m_time;
 
 public:
     Player(const std::string& fname, const std::string& lname,
               const std::string& tfname, const std::string& tlname,
-              const std::string instagram, int time);
+              const std::string instagram, const std::string tinstagram,
+              int time);
 
     std::string fname() const;
     std::string lname() const;
     std::string tfname() const;
     std::string tlname() const;
     std::string instagram() const;
+    std::string tinstagram() const;
     int time() const;
 
-    void set_target(std::string tfname, std::string tlname);
+    void set_target(std::string tfname, std::string tlname, std::string tinstagram);
     void set_time(int time);
 };
 # 8 "C:/Users/ziche/CLionProjects/Sting/game.h" 2
@@ -75078,8 +75081,9 @@ std::vector<Player> txt_import();
 void txt_export(const std::vector<Player>& list);
 void txt_exportf(std::vector<Player>& list);
 
+void update_listf();
 void search();
-std::vector<Player> shuffle(std::vector<std::tuple<std::string, std::string>> people);
+std::vector<Player> shuffle(std::vector<std::tuple<std::string, std::string, std::string>> list);
 void shuffle_setup();
 void eliminate();
 void time_decrease();
@@ -75090,7 +75094,7 @@ int main() {
     std::string input;
 
     for (;;) {
-        std::cout << "\nEnter 0 for player search, 1 for time decrease, 2 for player elimination,\n5 for target shuffle, 10 for player initialization, or anything else to quit:" << std::endl;
+        std::cout << "\nEnter 0 for player search, 1 for time decrease, 2 for player elimination, 3 for formatted list update,\n10 for target shuffle, 50 for player initialization, or anything else to quit:" << std::endl;
         std::getline(std::cin, input);
 
         if (input.empty()) {
@@ -75109,10 +75113,13 @@ int main() {
             case 2:
                 eliminate();
                 break;
-            case 5:
-                shuffle_setup();
+            case 3:
+                update_listf();
                 break;
             case 10:
+                shuffle_setup();
+                break;
+            case 50:
                 initialize();
                 break;
             default:
