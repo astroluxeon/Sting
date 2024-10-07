@@ -100799,7 +100799,9 @@ std::vector<Player> txt_import() {
     file.close();
 
     for (size_t i = 0; i < list.size(); ++i) {
-        players.emplace_back(std::get<0>(list[i]), std::get<1>(list[i]), std::get<0>(list[(i + 1) % list.size()]), std::get<1>(list[(i + 1) % list.size()]), std::get<2>(list[i]), std::get<2>(list[(i + 1) % list.size()]), std::get<3>(list[i]));
+        const auto& [fname, lname, instagram, time] = list[i];
+        const auto& [tfname, tlname, tinstagram, _] = list[(i + 1) % list.size()];
+        players.emplace_back(fname, lname, tfname, tlname, instagram, tinstagram, time);
     }
 
     return players;
@@ -100830,14 +100832,14 @@ void txt_exportf(std::vector<Player>& list) {
 }
 
 void update_listf() {
-    std::vector<Player> players = txt_import();
+    auto players = txt_import();
     txt_exportf(players);
 
     std::cout << "\nList Updated" << std::endl;
 }
 
 void search() {
-    std::vector<Player> players = txt_import();
+    auto players = txt_import();
     std::string fname, lname;
 
     for (;;) {
@@ -100872,19 +100874,12 @@ void search() {
 }
 
 std::vector<Player> shuffle(std::vector<std::tuple<std::string, std::string, std::string>> list) {
-    std::random_device rd;
-    std::mt19937 g(rd());
-
-    std::ranges::shuffle(list, g);
+    std::ranges::shuffle(list, std::mt19937{std::random_device{}()});
     std::vector<Player> players;
 
     for (size_t i = 0; i < list.size(); ++i) {
-        std::string fname = std::get<0>(list[i]);
-        std::string lname = std::get<1>(list[i]);
-        std::string tfname = std::get<0>(list[(i + 1) % list.size()]);
-        std::string tlname = std::get<1>(list[(i + 1) % list.size()]);
-        std::string instagram = std::get<2>(list[i]);
-        std::string tinstagram = std::get<2>(list[(i + 1) % list.size()]);
+        const auto& [fname, lname, instagram] = list[i];
+        const auto& [tfname, tlname, tinstagram] = list[(i + 1) % list.size()];
         players.emplace_back(fname, lname, tfname, tlname, instagram, tinstagram, time_limit);
     }
 
@@ -100892,14 +100887,14 @@ std::vector<Player> shuffle(std::vector<std::tuple<std::string, std::string, std
 }
 
 void shuffle_setup() {
-    std::vector<Player> players = txt_import();
+    auto players = txt_import();
     std::vector<std::tuple<std::string, std::string, std::string>> people;
 
     for (const auto& p : players) {
         people.emplace_back(p.fname(), p.lname(), p.instagram());
     }
 
-    std::vector<Player> list = shuffle(people);
+    auto list = shuffle(people);
 
     txt_export(list);
     txt_exportf(list);
@@ -100908,7 +100903,7 @@ void shuffle_setup() {
 }
 
 void eliminate() {
-    std::vector<Player> players = txt_import();
+    auto players = txt_import();
     std::string fname1, lname1;
 
     for (;;) {
@@ -100958,7 +100953,7 @@ void eliminate() {
 }
 
 void time_decrease() {
-    std::vector<Player> players = txt_import();
+    auto players = txt_import();
 
     for (auto& p : players) {
         p.set_time(p.time() - 1);
@@ -101024,7 +101019,7 @@ void initialize() {
         return;
     }
 
-    std::vector<Player> list = shuffle(players);
+    auto list = shuffle(players);
 
     txt_export(list);
     txt_exportf(list);
