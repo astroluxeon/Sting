@@ -100784,9 +100784,8 @@ std::vector<Player> txt_import() {
     std::ifstream file(txt_file);
     std::vector<Player> players;
     std::vector<std::tuple<std::string, std::string, std::string, int>> list;
-    std::string line;
 
-    while (std::getline(file, line)) {
+    for (std::string line; std::getline(file, line); ) {
         std::istringstream iss(line);
         std::string fname, lname, instagram;
         int time;
@@ -100961,7 +100960,7 @@ void time_decrease() {
 
     std::cout << "Time Decreased by 1 Day" << std::endl;
 
-    for (auto it = players.begin(); it != players.end(); ++it) {
+    for (auto it = players.begin(); it != players.end(); ) {
         if (it->time() <= 0) {
             std::cout << first_upper(it->fname()) << " " << first_upper(it->lname()) << " (Instagram: " << it->instagram() << ") has run out of time." << std::endl;
 
@@ -100984,7 +100983,8 @@ void time_decrease() {
             std::cout << first_upper(it2->fname()) << " " << first_upper(it2->lname()) << "'s new target is: " << first_upper(it2->tfname()) << " " << first_upper(it2->tlname()) << std::endl;
 
             players.erase(it1);
-            --it;
+        } else {
+            ++it;
         }
     }
 
@@ -101001,9 +101001,8 @@ void time_decrease() {
 void initialize() {
     auto file = std::ifstream(txt_initial);
     std::vector<std::tuple<std::string, std::string, std::string>> players;
-    std::string line;
 
-    while (std::getline(file, line)) {
+    for (std::string line; std::getline(file, line); ) {
         std::istringstream iss(line);
         std::string fname, lname, instagram;
 
