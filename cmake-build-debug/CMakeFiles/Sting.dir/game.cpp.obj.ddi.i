@@ -100934,7 +100934,7 @@ void eliminate() {
             });
 
             it2->set_target(it1->tfname(), it1->tlname(), it1->tinstagram());
-            it2->set_time(time_limit);
+            it2->set_time(it2->time() + time_limit);
             std::cout << first_upper(it2->fname()) << " " << first_upper(it2->lname()) << "'s new target is: " << first_upper(it2->tfname()) << " " << first_upper(it2->tlname()) << std::endl;
 
             players.erase(it1);
@@ -100979,7 +100979,7 @@ void time_decrease() {
             });
 
             it2->set_target(it1->tfname(), it1->tlname(), it1->tinstagram());
-            it2->set_time(time_limit);
+            it2->set_time(it2->time() + time_limit);
             std::cout << first_upper(it2->fname()) << " " << first_upper(it2->lname()) << "'s new target is: " << first_upper(it2->tfname()) << " " << first_upper(it2->tlname()) << std::endl;
 
             players.erase(it1);
