@@ -100872,14 +100872,14 @@ void search() {
     }
 }
 
-std::vector<Player> shuffle(std::vector<std::tuple<std::string, std::string, std::string>> list) {
+std::vector<Player> shuffle(std::vector<std::tuple<std::string, std::string, std::string, int>> list) {
     std::ranges::shuffle(list, std::mt19937{std::random_device{}()});
     std::vector<Player> players;
 
     for (size_t i = 0; i < list.size(); ++i) {
-        const auto& [fname, lname, instagram] = list[i];
-        const auto& [tfname, tlname, tinstagram] = list[(i + 1) % list.size()];
-        players.emplace_back(fname, lname, tfname, tlname, instagram, tinstagram, time_limit);
+        const auto& [fname, lname, instagram, time] = list[i];
+        const auto& [tfname, tlname, tinstagram, _] = list[(i + 1) % list.size()];
+        players.emplace_back(fname, lname, tfname, tlname, instagram, tinstagram, time);
     }
 
     return players;
@@ -100887,10 +100887,10 @@ std::vector<Player> shuffle(std::vector<std::tuple<std::string, std::string, std
 
 void shuffle_setup() {
     auto players = txt_import();
-    std::vector<std::tuple<std::string, std::string, std::string>> people;
+    std::vector<std::tuple<std::string, std::string, std::string, int>> people;
 
     for (const auto& p : players) {
-        people.emplace_back(p.fname(), p.lname(), p.instagram());
+        people.emplace_back(p.fname(), p.lname(), p.instagram(), p.time());
     }
 
     auto list = shuffle(people);
@@ -101000,14 +101000,14 @@ void time_decrease() {
 
 void initialize() {
     auto file = std::ifstream(txt_initial);
-    std::vector<std::tuple<std::string, std::string, std::string>> players;
+    std::vector<std::tuple<std::string, std::string, std::string, int>> players;
 
     for (std::string line; std::getline(file, line); ) {
         std::istringstream iss(line);
         std::string fname, lname, instagram;
 
         if (iss >> fname >> lname >> instagram) {
-            players.emplace_back(fname, lname, instagram);
+            players.emplace_back(fname, lname, instagram, time_limit);
         }
     }
 
