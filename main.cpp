@@ -20,16 +20,16 @@ int main() {
                 search();
                 break;
             case 1:
-                time_decrease();
+                timeDecrease();
                 break;
             case 2:
                 eliminate();
                 break;
             case 3:
-                update_listf();
+                updateListf();
                 break;
             case 10:
-                shuffle_setup();
+                shuffleSetup();
                 break;
             case 50:
                 initialize();

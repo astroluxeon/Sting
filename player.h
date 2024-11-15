@@ -7,10 +7,10 @@ class Player {
 private:
     std::string m_fname;
     std::string m_lname;
-    std::string m_target_fname;
-    std::string m_target_lname;
+    std::string m_tfname;
+    std::string m_tlname;
     std::string m_instagram;
-    std::string m_target_instagram;
+    std::string m_tinstagram;
     int m_time;
 
 public:
@@ -27,8 +27,8 @@ public:
     std::string tinstagram() const;
     int time() const;
 
-    void set_target(std::string tfname, std::string tlname, std::string tinstagram);
-    void set_time(int time);
+    void setTarget(std::string tfname, std::string tlname, std::string tinstagram);
+    void setTime(int time);
 };
 
 #endif

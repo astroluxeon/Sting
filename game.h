@@ -6,21 +6,21 @@
 #include <tuple>
 #include "player.h"
 
-inline const std::string txt_file = "list.txt";
-inline const std::string txt_filef = "listf.txt";
-inline const std::string txt_initial = "initial.txt";
-inline const int time_limit = 28;
+inline const std::string txtFile = "list.txt";
+inline const std::string txtFilef = "listf.txt";
+inline const std::string txtInitial = "initial.txt";
+inline const int timeLimit = 28;
 
-std::vector<Player> txt_import();
-void txt_export(const std::vector<Player>& list);
-void txt_exportf(std::vector<Player>& list);
+std::vector<Player> txtImport();
+void txtExport(const std::vector<Player>& list);
+void txtExportf(std::vector<Player>& list);
 
-void update_listf();
+void updateListf();
 void search();
 std::vector<Player> shuffle(std::vector<std::tuple<std::string, std::string, std::string>> list);
-void shuffle_setup();
+void shuffleSetup();
 void eliminate();
-void time_decrease();
+void timeDecrease();
 void initialize();
 
 #endif
