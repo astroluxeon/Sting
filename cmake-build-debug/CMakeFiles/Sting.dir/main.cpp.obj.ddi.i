@@ -73014,10 +73014,10 @@ class Player {
 private:
     std::string m_fname;
     std::string m_lname;
-    std::string m_target_fname;
-    std::string m_target_lname;
+    std::string m_tfname;
+    std::string m_tlname;
     std::string m_instagram;
-    std::string m_target_instagram;
+    std::string m_tinstagram;
     int m_time;
 
 public:
@@ -73034,26 +73034,26 @@ public:
     std::string tinstagram() const;
     int time() const;
 
-    void set_target(std::string tfname, std::string tlname, std::string tinstagram);
-    void set_time(int time);
+    void setTarget(std::string tfname, std::string tlname, std::string tinstagram);
+    void setTime(int time);
 };
 # 8 "C:/Users/ziche/CLionProjects/Sting/game.h" 2
 
-inline const std::string txt_file = "list.txt";
-inline const std::string txt_filef = "listf.txt";
-inline const std::string txt_initial = "initial.txt";
-inline const int time_limit = 28;
+inline const std::string txtFile = "list.txt";
+inline const std::string txtFilef = "listf.txt";
+inline const std::string txtInitial = "initial.txt";
+inline const int timeLimit = 28;
 
-std::vector<Player> txt_import();
-void txt_export(const std::vector<Player>& list);
-void txt_exportf(std::vector<Player>& list);
+std::vector<Player> txtImport();
+void txtExport(const std::vector<Player>& list);
+void txtExportf(std::vector<Player>& list);
 
-void update_listf();
+void updateListf();
 void search();
 std::vector<Player> shuffle(std::vector<std::tuple<std::string, std::string, std::string>> list);
-void shuffle_setup();
+void shuffleSetup();
 void eliminate();
-void time_decrease();
+void timeDecrease();
 void initialize();
 # 4 "C:/Users/ziche/CLionProjects/Sting/main.cpp" 2
 
@@ -73075,16 +73075,16 @@ int main() {
                 search();
                 break;
             case 1:
-                time_decrease();
+                timeDecrease();
                 break;
             case 2:
                 eliminate();
                 break;
             case 3:
-                update_listf();
+                updateListf();
                 break;
             case 10:
-                shuffle_setup();
+                shuffleSetup();
                 break;
             case 50:
                 initialize();
