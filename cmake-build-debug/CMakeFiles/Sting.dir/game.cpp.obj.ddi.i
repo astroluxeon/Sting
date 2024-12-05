@@ -100758,7 +100758,7 @@ public:
 inline const std::string txtFile = "list.txt";
 inline const std::string txtFilef = "listf.txt";
 inline const std::string txtInitial = "initial.txt";
-inline const int timeLimit = 28;
+inline const int timeLimit = 7;
 
 std::vector<Player> txtImport();
 void txtExport(const std::vector<Player>& list);
@@ -100842,14 +100842,14 @@ void search() {
     std::string fname, lname;
 
     for (;;) {
-        std::cout << "\nEnter Candidate's First Name:" << std::endl;
+        std::cout << "\nEnter Player's First Name:" << std::endl;
         std::getline(std::cin, fname);
 
         if (fname.empty()) {
             break;
         }
 
-        std::cout << "Enter Candidate's Last Name:" << std::endl;
+        std::cout << "Enter Player's Last Name:" << std::endl;
         std::getline(std::cin, lname);
 
         if (lname.empty()) {
@@ -100867,7 +100867,7 @@ void search() {
             std::cout << "Target Instagram: " << it->tinstagram() << std::endl;
             std::cout << "Time Left: " << it->time() << " Days" << std::endl;
         } else {
-            std::cout << "Candidate Not Found" << std::endl;
+            std::cout << "Player Not Found" << std::endl;
         }
     }
 }
@@ -100906,14 +100906,14 @@ void eliminate() {
     std::string fname1, lname1;
 
     for (;;) {
-        std::cout << "\nEnter Candidate's First Name:" << std::endl;
+        std::cout << "\nEnter Player's First Name:" << std::endl;
         std::getline(std::cin, fname1);
 
         if (fname1.empty()) {
             break;
         }
 
-        std::cout << "Enter Candidate's Last Name:" << std::endl;
+        std::cout << "Enter Player's Last Name:" << std::endl;
         std::getline(std::cin, lname1);
 
         if (lname1.empty()) {
@@ -100939,7 +100939,7 @@ void eliminate() {
 
             players.erase(it1);
         } else {
-            std::cout << "Candidate not found." << std::endl;
+            std::cout << "Player Not Found" << std::endl;
         }
     }
 
@@ -101014,7 +101014,7 @@ void initialize() {
     file.close();
 
     if (players.empty()) {
-        std::cout << "\nNo names found." << std::endl;
+        std::cout << "\nNo Names Found" << std::endl;
         return;
     }
 

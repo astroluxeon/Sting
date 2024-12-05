@@ -73042,7 +73042,7 @@ public:
 inline const std::string txtFile = "list.txt";
 inline const std::string txtFilef = "listf.txt";
 inline const std::string txtInitial = "initial.txt";
-inline const int timeLimit = 28;
+inline const int timeLimit = 7;
 
 std::vector<Player> txtImport();
 void txtExport(const std::vector<Player>& list);
